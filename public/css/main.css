@@ -1,0 +1,171 @@
+header{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background: #fff;
+}
+body{
+    background: #F5FAFF;
+    min-height: 100vh;
+}
+.container a{
+    color: #344359;
+    font-weight: bold;
+}
+
+.search{
+    border-radius: 0;
+    position: relative;
+    border: 0;
+    width: 100%;
+    max-width: 80px;
+}
+.icon{
+    width: 60px;
+}
+.search::placeholder{
+    font-size: .9rem;
+    color: #829494;
+}
+.loupe{
+    width: 100%;
+    max-width: 15px;
+}
+.new-folder{
+    color: #3E5070;
+    font-size: .9rem;
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+}
+.carpeta{
+    position: absolute;
+    text-align: left;
+    background-color: #F1F2F7;
+    padding: 10px;
+    border-radius: 8px;
+    z-index: 1;
+    right: 137px;
+    top: 133%;
+}
+.carpeta_2{
+    position: absolute;
+    text-align: left;
+    background-color: #F1F2F7;
+    padding: 10px;
+    border-radius: 8px;
+    z-index: 1;
+    right: 0px;
+    top: 133%;
+}
+.custom-file-label{
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid #CACBCE;
+    border-radius: 0;
+}
+.carpeta label, .carpeta_2 label{
+    display: block;
+    color: #40516F;
+    font-weight: bold;
+}
+.custom-file-input:lang(en)~.custom-file-label::after {
+    content: "";
+}
+.carpeta input, .carpeta select, .carpeta_2 input, .carpeta_2 select{
+    display: block;
+    background: transparent;
+    width: 100%;
+    max-width: 200px;
+    border: 0;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #CACBCE;
+}
+.btn-success{
+    width: 100%;
+}
+.btn-success {
+    color: #fff!important;
+    background-color: #218838!important;
+    border-color: #1e7e34!important;
+}
+.new-folder:hover{
+    color: #3E5070;
+}
+.new-folder img{
+    max-width: 15px;
+}
+.more-files{
+    background: #4AA84F;
+    border-radius: 4px;
+    color: #fff!important;
+    padding: .5rem 1rem;
+    font-size: .9rem;
+    margin-left: 1rem;
+}
+.more-files:hover{
+    color: #fff;
+}
+a:hover{
+    text-decoration: none;
+}
+.more-files img{
+    max-width: 15px;
+}
+.home-1{
+    padding-top: 4rem;
+}
+.home-1 .col-md-3{
+    margin-bottom: 2rem;
+}
+.home-1 a .content{
+    border-radius: 15px;
+    overflow: hidden;
+}
+.home-1 a .content .img-back{
+    background-size: cover;
+    min-height: 180px;
+    background-position: center;
+}
+.tab-pane{
+    padding-top: 1rem;
+}
+button.delete_folder{
+    border: 0;
+    background: transparent;
+    color: red;
+}
+button.delete_folder i{
+    margin-right: 10px;
+}
+.home-1 a .content p{
+    text-align: center;
+    color: #fff;
+    background: #015694;
+    padding-top: 1rem;
+    margin-bottom: 0;
+    padding-bottom: 1rem;
+}
+.col-md-2{
+    margin-bottom: 1rem;
+}
+.nav-link{
+    display: inline-block;
+}
+.delete{
+    display: block;
+}
+p{
+    word-break: break-all;
+}
+h1{
+    color: #fff;
+    background: #344359;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+h1.hipotecario{
+    background-color: #4B9E4F;
+
+}
