@@ -118,7 +118,8 @@ a:hover{
     margin-bottom: 2rem;
 }
 .home-1 a .content{
-    border-radius: 15px;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
     overflow: hidden;
 }
 .home-1 a .content .img-back{
@@ -137,13 +138,27 @@ button.delete_folder{
 button.delete_folder i{
     margin-right: 10px;
 }
-.home-1 a .content p{
+.home-1 p.title{
     text-align: center;
     color: #fff;
     background: #015694;
     padding-top: 1rem;
+    font-weight: bold;
     margin-bottom: 0;
     padding-bottom: 1rem;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+.menu-more{
+    display: block;
+    position: relative;
+}
+.menu-more a{
+    position: absolute;
+    right: 20px;
+}
+.menu-more a img{
+    width: 20px;
 }
 .col-md-2{
     margin-bottom: 1rem;
@@ -168,4 +183,19 @@ h1{
 h1.hipotecario{
     background-color: #4B9E4F;
 
+}
+.menu-more-items{
+    position: absolute;
+    top: 101%;
+    padding: 1rem 10px;
+    border-radius: 15px;
+    background: #f0f2f6;
+    z-index: 1;
+    width: calc(100% - 30px);
+}
+.menu-more-items a{
+    display: inline-block;
+    padding-left: 20px;
+    font-weight: normal;
+    color: #000;
 }

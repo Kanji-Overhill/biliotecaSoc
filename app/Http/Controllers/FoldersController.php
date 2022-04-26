@@ -29,6 +29,20 @@ class foldersController extends Controller
         }
         
     }
+    public function update_file(Request $request)
+    {
+        if ($request->type === "folder") {
+            $folder = Folders::find($request->id);
+            $url = Str::slug($request->name, '-');
+            $url = $url."-".rand();
+            $folder->url = $url;
+            $folder->name = $request->name;
+            $folder->save();
+            return "Success";
+        }else{
+
+        }
+    }
     public function form_folder(Request $request)
     {
         $id = $request->id;
@@ -129,6 +143,16 @@ class foldersController extends Controller
                 $path = public_path()."/archivos/".$files->url;
                 File::delete($path);
             Archives::destroy($id);
+        }
+
+        return "Success";
+    }
+    public function delete_multiple_folder(Request $request)
+    {
+        foreach ($request->folder as $key => $value) {
+            $id = intval($value);
+            $files = Folders::where('id', $id)->first();
+            Folders::destroy($id);
         }
 
         return "Success";

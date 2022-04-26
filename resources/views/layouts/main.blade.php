@@ -358,12 +358,58 @@
                     }
                 });
             });
-
+            $(".more-link").click(function(e){
+                e.preventDefault();
+                var id = $(this).attr("data-id");
+                $(".menu-more-items").addClass("d-none");
+                $("#more_"+id).removeClass("d-none");
+                $(".more-name").addClass("d-none");
+                $(".menu-more").removeClass("d-none");
+            });
+            $(".more_name_link").click(function(e){
+                e.preventDefault();
+                var id = $(this).attr("data-id");
+                $(".menu-more").removeClass("d-none");
+                $(".more-name").addClass("d-none");
+                $("#more-name-"+id).removeClass("d-none");
+                $("#menu-more-"+id).addClass("d-none");
+            });
+            $('.more-name').keypress(function(event){
+              var id = $(this).attr("data-id");
+              var type = $(this).attr("data-type");
+              var name = $(this).val();
+              var keycode = (event.keyCode ? event.keyCode : event.which);
+              if(keycode == '13'){
+                $.ajax({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    url: "{{route('update-file')}}",
+                    type: 'POST',
+                    data: {
+                      id: id,
+                      type: type,
+                      name: name
+                    },
+                    success: function(response){
+                      
+                    },
+                    error: function(xhr, textStatus, error) {
+                      console.log(xhr.responseText);
+                      console.log(xhr.statusText);
+                      console.log(textStatus);
+                      console.log(error);
+                    }
+                  }); 
+              }
+            });
             $(".delete-multiple-send").click(function(e){
               e.preventDefault();
               let archivos = [];
+              let folder = [];
               $('.archivos_multiple:checked').each(function() {
                   archivos.push($(this).attr("data-id"));
+              });
+              $('.folder_multiple:checked').each(function() {
+                  folder.push($(this).attr("data-id"));
               });
               $.ajax({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -375,6 +421,25 @@
                 success: function(response){
                   $.each(archivos, function(index, val) {
                     $("#content_files_"+val).addClass("d-none");
+                  });
+                },
+                error: function(xhr, textStatus, error) {
+                  console.log(xhr.responseText);
+                  console.log(xhr.statusText);
+                  console.log(textStatus);
+                  console.log(error);
+                }
+              });
+              $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: "{{route('delete_folder_multiple')}}",
+                type: 'POST',
+                data: {
+                  folder: folder,
+                },
+                success: function(response){
+                  $.each(folder, function(index, val) {
+                    $("#sub_folder"+val).addClass("d-none");
                   });
                 },
                 error: function(xhr, textStatus, error) {

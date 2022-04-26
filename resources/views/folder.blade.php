@@ -70,7 +70,12 @@
                                         @foreach($sub_folders as $key => $sub_folder_main)
                                             @foreach ( $sub_folder_main as $key => $sub_folder)
                                                  @if ($value->id === $sub_folder->id_folder)
-                                                    <div class="col-md-2">
+                                                    <div class="col-md-2" id="sub_folder{{ $sub_folder->id }}">
+                                                        @if (Auth::check())   
+                                                                @if(Auth::user()->type == 0)
+                                                                    <input type="checkbox" class="form-check-input folder_multiple" data-id="{{ $sub_folder->id }}" name="select_folder[]">
+                                                                @endif
+                                                            @endif
                                                         <a href="{{url('/')}}/folder/{{$sub_folder->url}}" id="folder_{{$sub_folder->id}}">
                                                             <div class="content text-center" style="box-shadow: 0px 3px 6px #00000029; border-radius: 5px; padding: 10px">
                                                                 <img src="{{url('img')}}/{{$sub_folder->img}}" class="img-fluid" alt="">

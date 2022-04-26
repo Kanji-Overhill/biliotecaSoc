@@ -34,6 +34,8 @@ Route::post('/folder/file_insert','App\Http\Controllers\FoldersController@file_i
 Route::get('/appredirect/{key}','App\Http\Controllers\FoldersController@autologin');
 Route::post('/search','App\Http\Controllers\FoldersController@search');
 Route::post('/folder/delete_file_multiple','App\Http\Controllers\FoldersController@delete_multiple')->name('delete_file_multiple');
+Route::post('/folder/delete_folder_multiple','App\Http\Controllers\FoldersController@delete_multiple_folder')->name('delete_folder_multiple');
+Route::post('/folder/update-file','App\Http\Controllers\FoldersController@update_file')->name('update-file');
 
 Route::get('/home','App\Http\Controllers\FoldersController@index');
 
