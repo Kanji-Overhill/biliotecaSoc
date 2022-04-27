@@ -197,6 +197,7 @@
                             if(response === "Success"){
                                 $(".alert-danger").removeClass("d-none");
                                 $("#folder_"+id).addClass("d-none");
+                                $("#sub_folder"+id).addClass("d-none");
                                 $("#"+id).addClass("d-none");
                                 $(".link_folder_"+id).addClass("d-none");
                             }else{
@@ -361,8 +362,10 @@
             $(".more-link").click(function(e){
                 e.preventDefault();
                 var id = $(this).attr("data-id");
-                $(".menu-more-items").addClass("d-none");
-                $("#more_"+id).removeClass("d-none");
+                
+                $(this).parent().parent().parent().siblings().find(".menu-more-items").addClass("d-none");
+                $("#more_"+id).toggleClass("d-none");
+
                 $(".more-name").addClass("d-none");
                 $(".menu-more").removeClass("d-none");
             });
@@ -371,15 +374,39 @@
                 var id = $(this).attr("data-id");
                 $(".menu-more").removeClass("d-none");
                 $(".more-name").addClass("d-none");
-                $("#more-name-"+id).removeClass("d-none");
+                $("#more-name-"+id).removeClass("d-none").focus();
+                $('<a class="more-name-btn-submit fa fa-chevron-right"></a>').insertAfter("#more-name-"+id);
                 $("#menu-more-"+id).addClass("d-none");
+                $("#more_"+id).addClass("d-none");
             });
+            $('.select_link').click(function(e) {
+                e.preventDefault();
+                var id = $(this).attr("data-id");
+                $(".menu-more-items").addClass("d-none");
+                $('.floating-checkbox').fadeIn('fast');
+                $('.delete-multiple-btn').fadeIn('fast');
+                $('[data-id="'+id+'"][name="select_folder[]"]').prop('checked',true);
+                
+            });
+
+            // Actualizar nombre con ENTER o click al botón
             $('.more-name').keypress(function(event){
               var id = $(this).attr("data-id");
               var type = $(this).attr("data-type");
               var name = $(this).val();
               var keycode = (event.keyCode ? event.keyCode : event.which);
               if(keycode == '13'){
+                update_name(id,type,name);
+              }
+            });
+            $('body').on('click','.more-name-btn-submit',function(e){
+              var id = $(this).prev().attr("data-id");
+              var type = $(this).prev().attr("data-type");
+              var name = $(this).prev().val();
+
+              update_name(id,type,name);
+            });
+            function update_name(id,type,name){
                 $.ajax({
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     url: "{{route('update-file')}}",
@@ -390,7 +417,12 @@
                       name: name
                     },
                     success: function(response){
-                      
+                        // $(".more-name").addClass("d-none");
+                        // $(".more-name").removeClass("d-none");
+                        $('.more-name-btn-submit').remove();
+                        $("#more-name-"+id).addClass("d-none");
+                        $("#menu-more-"+id+' > span').html(name);
+                        $("#menu-more-"+id).removeClass("d-none");
                     },
                     error: function(xhr, textStatus, error) {
                       console.log(xhr.responseText);
@@ -398,9 +430,8 @@
                       console.log(textStatus);
                       console.log(error);
                     }
-                  }); 
-              }
-            });
+                }); 
+            };
             $(".delete-multiple-send").click(function(e){
               e.preventDefault();
               let archivos = [];
@@ -440,6 +471,7 @@
                 success: function(response){
                   $.each(folder, function(index, val) {
                     $("#sub_folder"+val).addClass("d-none");
+                    $("#home_folder"+val).addClass("d-none");
                   });
                 },
                 error: function(xhr, textStatus, error) {
@@ -449,6 +481,17 @@
                   console.log(error);
                 }
               });
+
+              // Cerramos modal
+                $('#exampleModalDelete2').modal('hide');
+                $('.floating-checkbox').hide();
+                $('.delete-multiple-btn').hide();
+            });
+
+            $('#cancel_selection').click(function(e) {
+                $('.floating-checkbox input[type="checkbox"]').prop('checked',false);
+                $('.floating-checkbox').hide();
+                $('.delete-multiple-btn').hide();
             });
         });
     </script>

@@ -8,9 +8,10 @@
         @if (Auth::check())
             @if(Auth::user()->type == 0)
                 <div class="container">
-                    <div class="row">
-                        <div class="col-12 mb-4">
+                    <div class="row" style="min-height:48px;">
+                        <div class="col-12 mb-4 delete-multiple-btn" style="display:none;">
                             <a href="" class="mr-4 delete-multiple" data-toggle="modal" data-target="#exampleModalDelete2" style="color: red;"><i class="fa-solid fa-trash-can"></i> Eliminar archivos seleccionados</a>
+                            <a href="" id="cancel_selection"><i class="fa fa-times"></i> Cancelar</a>
                         </div>
                     </div>
                 </div>
@@ -73,7 +74,9 @@
                                                     <div class="col-md-2" id="sub_folder{{ $sub_folder->id }}">
                                                         @if (Auth::check())   
                                                                 @if(Auth::user()->type == 0)
-                                                                    <input type="checkbox" class="form-check-input folder_multiple" data-id="{{ $sub_folder->id }}" name="select_folder[]">
+                                                                    <label class="floating-checkbox">
+                                                                        <input type="checkbox" class="form-check-input folder_multiple" data-id="{{ $sub_folder->id }}" name="select_folder[]">
+                                                                    </label>
                                                                 @endif
                                                             @endif
                                                         <a href="{{url('/')}}/folder/{{$sub_folder->url}}" id="folder_{{$sub_folder->id}}">
@@ -85,8 +88,12 @@
                                                                 
                                                             </div>
                                                         </a>
+                                                        <span class="more-link more-link-floating" data-id="{{$sub_folder->id}}"></span>
                                                         @if (Auth::check())
-                                                            <a class="delete delete_folder text-center link_folder_{{$sub_folder->id}}" id="{{$sub_folder->id}}" href=""><i class="far fa-trash-alt"></i></a>                 
+                                                            <div class="menu-more-items small-more-items d-none" id="more_{{$sub_folder->id}}">
+                                                                <a href="" class="select_link" data-id="{{ $sub_folder->id }}">Selecionar</a>
+                                                                <a class="delete delete_folder link_folder_{{$sub_folder->id}}" id="{{$sub_folder->id}}" href="">Eliminar</a>
+                                                            </div>
                                                         @else
                                                         @endif
                                                     </div>
@@ -103,7 +110,9 @@
                                                         <div class="col-md-2" id="content_files_{{ $archives_file->id }}">
                                                             @if (Auth::check())   
                                                                 @if(Auth::user()->type == 0)
-                                                                    <input type="checkbox" class="form-check-input archivos_multiple" data-id="{{ $archives_file->id }}" name="select[]">
+                                                                    <label class="floating-checkbox">
+                                                                        <input type="checkbox" class="form-check-input archivos_multiple" data-id="{{ $archives_file->id }}" name="select[]">
+                                                                    </label>
                                                                 @endif
                                                             @endif
                                                             <a href="{{url('img')}}/archivos/{{$archives_file->img}}" id="files_{{$archives_file->id}}" target="_blank">
@@ -216,7 +225,10 @@
                                                                 </div>
                                                             </a>
                                                             @if (Auth::check())
-                                                                <a class="delete delete_file text-center link_files_{{$archives_file->id}}" id="{{$archives_file->id}}" href=""><i class="far fa-trash-alt"></i></a>                 
+                                                                <div class="menu-more-items small-more-items d-none" id="more_{{$archives_file->id}}">
+                                                                    <a href="" class="select_link" data-id="{{ $archives_file->id }}">Selecionar</a>
+                                                                    <a class="delete delete_file link_files_{{$archives_file->id}}" id="{{$archives_file->id}}" href="">Eliminar</a>
+                                                                </div>            
                                                             @else
                                                             @endif
                                                         </div>

@@ -137,23 +137,25 @@ class foldersController extends Controller
     }
     public function delete_multiple(Request $request)
     {
+        if(isset($request->archivos) && !empty($request->archivos)){
         foreach ($request->archivos as $key => $value) {
             $id = intval($value);
             $files = Archives::where('id', $id)->first();
                 $path = public_path()."/archivos/".$files->url;
                 File::delete($path);
             Archives::destroy($id);
-        }
+        } }
 
         return "Success";
     }
     public function delete_multiple_folder(Request $request)
     {
+        if(isset($request->folder) && !empty($request->folder)){
         foreach ($request->folder as $key => $value) {
             $id = intval($value);
             $files = Folders::where('id', $id)->first();
             Folders::destroy($id);
-        }
+        } }
 
         return "Success";
     }
