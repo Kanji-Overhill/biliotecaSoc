@@ -149,6 +149,35 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.0.0/animate.min.css">
+    <link rel="stylesheet" href="{{ url('lib/liquidslider/css/liquid-slider.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.touchswipe/1.6.4/jquery.touchSwipe.min.js"></script>
+    <script src="{{ url('lib/liquidslider/js/jquery.liquid-slider.min.js') }}"></script>
+    <script>
+        $('.tab-link').click(function(e) {
+            e.stopPropagation();
+            $(this).addClass('active');
+            $(this).parent().siblings().find('.tab-link').removeClass('active');
+            $('.menu-more-items').addClass('d-none');
+        })
+        $('#slider').liquidSlider({
+            includeTitle:false,
+            slideEaseDuration:300,
+            heightEaseDuration:1000,
+            slideEaseFunction:'animate.css',
+            animateIn:"fadeInRight",
+            animateOut:"slideOutLeft",
+            hideSideArrows: true,
+            useCSSMaxWidth: 3000,
+            dynamicArrows: false,
+        });
+        
+        var api1 = $.data( $('#slider')[0], 'liquidSlider');
+    </script>
+
     <script>
         $(document).ready(function() {
             $('.new-folder').click(function(e){

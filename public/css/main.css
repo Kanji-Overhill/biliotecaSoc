@@ -177,6 +177,23 @@ button.delete_folder i{
     cursor: pointer;
 }
 
+h1  .more-name-btn-submit{
+    bottom: 0.1em;
+}
+
+h1 .more-name{
+    margin:0 auto;
+    background:transparent;
+    color:white;
+    text-align:center;
+    max-width:700px;
+    border:none;
+    outline:none;
+    box-shadow:none;
+    padding:0px;
+    font-size:2.5rem;
+}
+
 /* Home items */
 .floating-checkbox{
     display: none;
@@ -295,3 +312,25 @@ h1.hipotecario{
     font-weight: normal;
     color: #000;
 }
+.tab-link.active {
+    color: #495057;
+    background-color: #fff;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.tab-link {
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+}
+[id^="slider"]{
+    width: 100%;
+    max-width: none !important; }
+
+.panel-wrapper{
+    padding: 15px !important; }
+
+.liquid-slider{
+    background: transparent !important; }

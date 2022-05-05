@@ -3,36 +3,74 @@
 @section('content')
     <section class="folder-1 {{$url_folder}}">
         <h1 class="{{$url_folder}}">
-            {{$title_folder}}
+            {{-- $title_folder --}}
+
+            <div class="position-relative">
+                <p class="title menu-more mb-0" id="menu-more-{{$id_folder}}"><span>{{$title_folder}}</span> <a href="" class="more-link" data-id="{{$id_folder}}"><img src="{{ url('img/more.png') }}" alt="" class="img-fluid"></a></p>
+                <input type="text" class="more-name form-control d-none" id="more-name-{{ $id_folder }}" data-id="{{ $id_folder }}" data-type="folder" value="{{$title_folder}}">
+                <div style="font-size:1rem;width:300px;max-width:100%;left:auto;line-height:1;" class="menu-more-items d-none" id="more_{{$id_folder}}">
+                    <a href="" class="more_name_link d-block" data-type="folder" data-id="{{ $id_folder }}">Cambiar nombre</a>
+                </div>
+            </div>
         </h1>
+        <div class="container mb-4">
+            <div class="row justify-content-between" style="min-height:48px;">
+                <div class="col-md-5 mb-4">
+                    <div class="delete-multiple-btn" style="display:none;">
+                        <a href="" class="mr-4 delete-multiple" data-toggle="modal" data-target="#exampleModalDelete2" style="color: red;"><i class="fa-solid fa-trash-can"></i> Eliminar archivos seleccionados</a>
+                        <a href="" id="cancel_selection"><i class="fa fa-times"></i> Cancelar</a>
+                    </div>
+                </div>
+                <div class="col-md-5 text-right view-select" style="justify-self:end;">
+                    <a href="" id="cuadricula" class="mr-4"><img src="{{ url('img/cuadricula.png') }}" alt="" class="img-fluid"></a>
+                        <a href="" id="lista"><img src="{{ url('img/lista.png') }}" alt="" class="img-fluid"></a>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <div class="row align-items-start">
                 @foreach($sub_folders as $key => $sub_folder)
                     @if (isset($sub_folder->id_folder))
                         @if ($id_folder === $sub_folder->id_folder)
                             <div class="col-md-2">
+                                @if (Auth::check())
+                                    @if(Auth::user()->type == 0)
+                                        <label class="floating-checkbox">
+                                            <input type="checkbox" class="form-check-input folder_multiple" data-id="{{ $sub_folder->id }}" name="select_folder[]">
+                                        </label>
+                                    @endif
+                                @endif
                                 <a href="{{url('/')}}/folder/{{$sub_folder->url}}" id="folder_{{$sub_folder->id}}">
                                     <div class="content text-center" style="box-shadow: 0px 3px 6px #00000029; border-radius: 5px; padding: 10px">
                                         <img src="{{url('img')}}/{{$sub_folder->img}}" class="img-fluid" alt="">
-                                        @if ($sub_folder->hide == 0)
-                                                                    <p>{{$sub_folder->name}}</p>
-                                                                @endif
+                                        <p class="{{ $sub_folder->hide == 0 ? '' : 'd-none' }}">{{ strlen($sub_folder->name) > 35 ? substr($sub_folder->name, 0, 35).'...' : $sub_folder->name}}</p>
                                     </div>
                                 </a>
                                 @if (Auth::check())
-                                                            <a class="delete delete_folder text-center link_folder_{{$sub_folder->id}}" id="{{$sub_folder->id}}" href=""><i class="far fa-trash-alt"></i></a>                 
-                                                        @else
-                                                        @endif
+                                    <span class="more-link more-link-floating" data-id="{{$sub_folder->id}}"></span>
+                                    <div class="menu-more-items small-more-items d-none" id="more_{{$sub_folder->id}}">
+                                        <a href="" class="select_link" data-id="{{ $sub_folder->id }}">Seleccionar</a>
+                                        <a class="delete delete_folder link_folder_{{$sub_folder->id}}" id="{{$sub_folder->id}}" href="">Eliminar</a>
+                                    </div>
+                                @else
+                                @endif
                             </div>
                         @endif
                     @endif
                 @endforeach
-            </div> 
+            </div>
             <div class="row align-items-start">
                 @foreach($archives as $key => $archives)
                     @if (isset($archives->id_folder))
                         @if ($id_folder === $archives->id_folder)
                             <div class="col-md-2">
+                                @if (Auth::check())
+                                    @if(Auth::user()->type == 0)
+                                        <label class="floating-checkbox">
+                                            <input type="checkbox" class="form-check-input archivos_multiple" data-id="{{ $archives->id }}" name="select[]">
+                                        </label>
+                                    @endif
+                                @endif
                                 <a href="{{url('img')}}/archivos/{{$archives->img}}" id="files_{{$archives->id}}" target="_blank">
                                     <div class="content text-center">
                                         @php
@@ -44,8 +82,8 @@
                                             }else if ($imagen[1] == "3ds") {
                                                 $registro_imagen = "/icons/3ds.png";
                                             }else if ($imagen[1] == "jpeg") {
-                                                                            $registro_imagen = "/icons/jpg.png";
-                                                                        }else if ($imagen[1] == "aac") {
+                                                $registro_imagen = "/icons/jpg.png";
+                                            }else if ($imagen[1] == "aac") {
                                                 $registro_imagen = "/icons/aac.png";
                                             }else if ($imagen[1] == "ai") {
                                                 $registro_imagen = "/icons/ai.png";
@@ -128,16 +166,18 @@
                                             }
                                         @endphp
                                         <img src="{{url('img')}}/{{$registro_imagen}}" class="img-fluid" alt="">
-                                        @if ($archives->hide == 0)
-                                            <p> {{$archives->img}}     </p>     
-                                        @else
-                                      @endif
+                                        <p class="{{ $archives->hide == 0 ? '' : 'd-none' }}">{{ strlen($archives->img) > 35 ? substr($archives->img, 0, 35).'...' : $archives->img }}</p>
+
                                     </div>
                                 </a>
                                  @if (Auth::check())
-                                                                <a class="delete delete_file text-center link_files_{{$archives->id}}" id="{{$archives->id}}" href=""><i class="far fa-trash-alt"></i></a>                 
-                                                            @else
-                                                            @endif
+                                    <span class="more-link more-link-floating" data-id="{{$archives->id}}"></span>
+                                    <div class="menu-more-items small-more-items d-none" id="more_{{$archives->id}}">
+                                        <a href="" class="select_link" data-id="{{ $archives->id }}">Seleccionar</a>
+                                        <a class="delete delete_file link_files_{{$archives->id}}" id="{{$archives->id}}" href="">Eliminar</a>
+                                    </div>
+                                @else
+                                @endif
                             </div>
                         @endif
                     @endif
