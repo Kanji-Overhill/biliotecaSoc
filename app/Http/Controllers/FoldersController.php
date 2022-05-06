@@ -142,7 +142,7 @@ class foldersController extends Controller
             $id = intval($value);
             $files = Archives::where('id', $id)->first();
                 $path = public_path()."/archivos/".$files->url;
-                File::delete($path);
+                
             Archives::destroy($id);
         } }
 
@@ -215,7 +215,7 @@ class foldersController extends Controller
         Archives::where('id', $id)->delete();
         foreach ($files as $key => $value) {
             $path = public_path()."/img/archivos/".$value->img;
-            File::delete($path);
+            
         }
         Archives::where('id', $id)->delete();
         return "Success";
@@ -241,5 +241,27 @@ class foldersController extends Controller
             return view('user',['folders_main'=>$folders]);
         }
         
+    }
+    public function moveFile(Request $request)
+    {
+        $ids = $request->ids;
+        $destino = $request->destino;
+        foreach ($ids as $key => $value) {
+            $folder = Folders::find($value);
+            $folder->id_folder = $destino;
+            $folder->save();
+        }
+        return "Success";
+    }
+    public function moveFolder(Request $request)
+    {
+        $ids = $request->ids;
+        $destino = $request->destino;
+        foreach ($ids as $key => $value) {
+            $folder = Folders::find($value);
+            $folder->id_folder = $destino;
+            $folder->save();
+        }
+        return "Success";
     }
 }
